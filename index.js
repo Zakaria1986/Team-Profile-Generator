@@ -1,71 +1,134 @@
 
 const Employee = require("./lib/Employee");
+const Manager = require("./lib/manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const process = require('process');
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
+console.log(OUTPUT_DIR);
 const outputPath = path.join(OUTPUT_DIR, "team.html");
+console.log(outputPath);
 const render = require("./src/page-template.js");
+// const generateTeam = require('./src/./src/page-template.js');
 const { default: Choice } = require("inquirer/lib/objects/choice");
+const generateTeam = require('./src/page-template.js');
 // getting the questions from the promptObjs files
 const promptObjs = require("./lib/promptObjs");
 const { Console } = require("console");
 
-console.log('everything is working fine, greate stuff Zak!');
 // Write a function that take inquirer function and promts user to select the type of user they want to create?
 // This would have four choices
 // - Manager - Engineer - Intern - Done adding employee to the system
 
-const buildingTeam = [];
+// const buildingTeam = [];
 
 console.log(promptObjs);
 
-
 // resuable inquire function
-function inquirerfuc(promptQuestions) {
+function inquirerfunc(promptQuestions) {
     return inquirer.prompt(promptQuestions);
 }
 
-function initiatPrompt() {
-    inquirerfuc(promptObjs.userChoice).then(userChoice => {
-        console.log('........ You have selected: ', userChoice.selectedChoice + ' ........\n');
+// Bulding arrays of objects
+const builtTeam = [];
 
-        console.log('you are dynamically enter value: ', promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)])
+function createIndexJsFile(createFile) {
 
-        for (let i = 0; i < promptObjs.userChoice[0].choices.length; i++) {
-            console.log('Consoling out the options ', promptObjs.userChoice[0].choices[i])
+    fs.writeFileSync(outputPath, render(createFile));
+}
 
-            if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)] === promptObjs.userChoice[0].choices[0]) {
-                console.log('index: ', promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice), ' value: ', promptObjs.userChoice[0].choices[0]);
-                break;
-            } else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)] === promptObjs.userChoice[0].choices[1]) {
-                console.log('index: ', promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice), ' value: ', promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)])
-                break;
-            }
-            else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)] === promptObjs.userChoice[0].choices[2]) {
-                console.log('index: ', promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice), ' value: ', promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)])
-                break;
-            } else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)] === promptObjs.userChoice[0].choices[3]) {
-                console.log('index: ', promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice), ' value: ', promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(userChoice.selectedChoice)])
-                break;
-            }
-        }
-
-
+// User choice function to be used in a loop till user decides not to use it any longer
+function userchoiceFunc() {
+    inquirerfunc(promptObjs.userChoice).then(userChoice => {
+        console.log('........ You have selected: ', userChoice.selectedChoice, ' ........\n')
+        repeatPrompt(userChoice.selectedChoice);
     })
+}
+
+// Prompt function to be used everytime user wants to add a new team member
+function repeatPrompt(selectedChoice) {
+    // Execute the correct function based on the user selection
+    for (let i = 0; i < promptObjs.userChoice[0].choices.length; i++) {
+        console.log('Consoling out the options ', promptObjs.userChoice[0].choices[i])
+
+        if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(selectedChoice)] === promptObjs.userChoice[0].choices[0]) {
+            inquirerfunc(promptObjs.managerQuestions).then((mData) => {
+                console.log(mData.mName);
+
+                // const manager = new Manager(mData.manName, mData.manId, mData.manEmail, mData.manOfficeNum, selectedChoice)
+
+                const managerOb = new Manager(
+                    mData.manName,
+                    mData.manId,
+                    mData.manEmail,
+                    mData.manOfficeNum,
+                    selectedChoice
+                )
+
+                // console.log('getting obj name ', managerOb.getRole());
+
+                // console.log(mData);
+                builtTeam.push(managerOb);
+                userchoiceFunc();
+            });
+            break;
+        } else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(selectedChoice)] === promptObjs.userChoice[0].choices[1]) {
+            inquirerfunc(promptObjs.engineerQuestions).then((enData) => {
+                // const manager = new Manager(mData.manName, mData.manId,mData.manEmail,mData.manOfficeNum,selectedChoice)
+                // console.log(manager);
+                const engineer = new Engineer(enData.enName, enData.enId, enData.enEmail, enData.enGithub, selectedChoice)
+                builtTeam.push(engineer);
+                userchoiceFunc();
+            });
+            break;
+        }
+        else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(selectedChoice)] === promptObjs.userChoice[0].choices[2]) {
+            inquirerfunc(promptObjs.InternQuestion).then((intData) => {
+                // console.log('This is intern promt: ', intData.intName);
+                const internObj = new Intern(intData.intName, intData.intId, intData.intEmail, intData.intSchool, selectedChoice)
+                const intern = {
+                    name: internObj.getName(),
+                    id: internObj.getId(),
+                    email: internObj.getEmail(),
+                    school: internObj.getSchool(),
+                    role: internObj.getRole(),
+                }
+
+                builtTeam.push(JSON.stringify(intern));
+
+                userchoiceFunc();
+            });
+            break;
+        } else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(selectedChoice)] === promptObjs.userChoice[0].choices[3]) {
+            // console.log(buildingTeam[0].name, "\n", buildingTeam[0].officeNumber);
+
+            generateTeam(builtTeam);
+
+
+
+
+            // console.log("parsed data ", JSON.parse(builtTeam));
+
+
+
+
+            // createIndexJsFile(builtTeam);
+            console.log('you are done building your team');
+            break;
+        }
+    }
+}
+
+// Initialise the functions
+function initiatPrompt() {
+    userchoiceFunc();
 }
 initiatPrompt();
 
-
-// inquirerfuc(promptObjs.InternQuestion).then(intData => {
-//     console.log(`Interns name: ${intData.intName}\n Interns id: ${intData.intId} \n interns email: ${intData.intEmail}\n interns school name: ${intData.intSchool}`)
-// });
-
-
-    // if the option is no more employee is needed then exist and build html templates
 
 
 // if the user selects any of the other options then prompt the user the series of quesiton by calling the functions

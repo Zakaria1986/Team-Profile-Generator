@@ -1,5 +1,23 @@
 // creates the team
+const Manager = require("./../lib/manager");
+
 const generateTeam = team => {
+
+    console.log('consoling from team', team)
+
+
+    // if (team[0] instanceof Manager) {
+    //     const html = [];
+    // generateManager(team[0]);
+    // console.log('Getting name of the manager: ', team[0].getName())
+    // console.log('Getting name of the manager: ', team[0].getRole())
+
+    team.filter(employee => employee.role === "Manager")
+        .map(manager => console.log("Getting manager role: ", manager.getRole()));
+    //  .map(manager => generateManager(manager))
+    // }
+
+    console.log('is it instance of ',);
 
     // creates the manager html
     const generateManager = manager => {
@@ -58,24 +76,39 @@ const generateTeam = team => {
         `;
     };
 
-    const html = [];
+    // const html = [];
 
-    html.push(team
-        .filter(employee => employee.getRole() === "Manager")
-        .map(manager => generateManager(manager))
-    );
-    html.push(team
-        .filter(employee => employee.getRole() === "Engineer")
-        .map(engineer => generateEngineer(engineer))
-        .join("")
-    );
-    html.push(team
-        .filter(employee => employee.getRole() === "Intern")
-        .map(intern => generateIntern(intern))
-        .join("")
-    );
+    // html.push(team
+    //     .filter(employee => employee.role === "Manager")
+    //     .map(manager => generateManager(manager))
+    // );
+    // html.push(team
+    //     .filter(employee => employee.getRole() === "Engineer")
+    //     .map(engineer => generateEngineer(engineer))
+    //     .join("")
+    // );
+    // html.push(team
+    //     .filter(employee => employee.getRole() === "Intern")
+    //     .map(intern => generateIntern(intern))
+    //     .join("")
+    // );
 
-    return html.join("");
+    // html.push(team
+    //     .filter(employee => employee.role === "Manager")
+    //     .map(manager => generateManager(manager))
+    // );
+    // html.push(team
+    //     .filter(employee => employee.getRole() === "Engineer")
+    //     .map(engineer => generateEngineer(engineer))
+    //     .join("")
+    // );
+    // html.push(team
+    //     .filter(employee => employee.getRole() === "Intern")
+    //     .map(intern => generateIntern(intern))
+    //     .join("")
+    // );
+
+    // return html.join("");
 
 }
 
