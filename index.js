@@ -37,8 +37,7 @@ function inquirerfunc(promptQuestions) {
 const builtTeam = [];
 
 function createIndexJsFile(createFile) {
-
-    fs.writeFileSync(outputPath, render(createFile));
+    fs.writeFileSync(outputPath, generateTeam(createFile));
 }
 
 // User choice function to be used in a loop till user decides not to use it any longer
@@ -60,7 +59,6 @@ function repeatPrompt(selectedChoice) {
                 console.log(mData.mName);
 
                 // const manager = new Manager(mData.manName, mData.manId, mData.manEmail, mData.manOfficeNum, selectedChoice)
-
                 const managerOb = new Manager(
                     mData.manName,
                     mData.manId,
@@ -69,9 +67,6 @@ function repeatPrompt(selectedChoice) {
                     selectedChoice
                 )
 
-                // console.log('getting obj name ', managerOb.getRole());
-
-                // console.log(mData);
                 builtTeam.push(managerOb);
                 userchoiceFunc();
             });
@@ -80,7 +75,13 @@ function repeatPrompt(selectedChoice) {
             inquirerfunc(promptObjs.engineerQuestions).then((enData) => {
                 // const manager = new Manager(mData.manName, mData.manId,mData.manEmail,mData.manOfficeNum,selectedChoice)
                 // console.log(manager);
-                const engineer = new Engineer(enData.enName, enData.enId, enData.enEmail, enData.enGithub, selectedChoice)
+                const engineer = new Engineer(
+                    enData.enName,
+                    enData.enId,
+                    enData.enEmail,
+                    enData.enGithub,
+                    selectedChoice
+                );
                 builtTeam.push(engineer);
                 userchoiceFunc();
             });
@@ -89,34 +90,22 @@ function repeatPrompt(selectedChoice) {
         else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(selectedChoice)] === promptObjs.userChoice[0].choices[2]) {
             inquirerfunc(promptObjs.InternQuestion).then((intData) => {
                 // console.log('This is intern promt: ', intData.intName);
-                const internObj = new Intern(intData.intName, intData.intId, intData.intEmail, intData.intSchool, selectedChoice)
-                const intern = {
-                    name: internObj.getName(),
-                    id: internObj.getId(),
-                    email: internObj.getEmail(),
-                    school: internObj.getSchool(),
-                    role: internObj.getRole(),
-                }
+                const intern = new Intern(
+                    intData.intName,
+                    intData.intId,
+                    intData.intEmail,
+                    intData.intSchool,
+                    selectedChoice
+                );
 
-                builtTeam.push(JSON.stringify(intern));
-
+                builtTeam.push((intern));
                 userchoiceFunc();
             });
             break;
         } else if (promptObjs.userChoice[0].choices[promptObjs.userChoice[0].choices.indexOf(selectedChoice)] === promptObjs.userChoice[0].choices[3]) {
-            // console.log(buildingTeam[0].name, "\n", buildingTeam[0].officeNumber);
 
-            generateTeam(builtTeam);
-
-
-
-
-            // console.log("parsed data ", JSON.parse(builtTeam));
-
-
-
-
-            // createIndexJsFile(builtTeam);
+            createIndexJsFile(builtTeam);
+            //Console out that building team is over
             console.log('you are done building your team');
             break;
         }

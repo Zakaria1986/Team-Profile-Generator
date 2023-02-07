@@ -1,9 +1,18 @@
 // creates the team
 const Manager = require("./../lib/manager");
 
-const generateTeam = team => {
 
-    console.log('consoling from team', team)
+
+const generateTeam = team => {
+    console.log(team);
+
+    // console.log('consoling from page-template',
+    //     '\n', team[0].getName(),
+    //     '\n', team[0].getId(),
+    //     '\n', team[0].getEmail(),
+    //     '\n', team[0].getRole(),
+    //     '\n', team[0].getGithub()
+    // )
 
 
     // if (team[0] instanceof Manager) {
@@ -12,10 +21,10 @@ const generateTeam = team => {
     // console.log('Getting name of the manager: ', team[0].getName())
     // console.log('Getting name of the manager: ', team[0].getRole())
 
-    team.filter(employee => employee.role === "Manager")
-        .map(manager => console.log("Getting manager role: ", manager.getRole()));
-    //  .map(manager => generateManager(manager))
-    // }
+    // team.filter(employee => employee.role === "Manager")
+    //     .map(manager => console.log("Getting manager role: ", manager.getRole()));
+    // //  .map(manager => generateManager(manager))
+    // // }
 
     console.log('is it instance of ',);
 
@@ -53,7 +62,7 @@ const generateTeam = team => {
             <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.getGithub()}" target="_blank" rel="noopener noreferrer">${engineer.getGithub()}</a></li>
         </ul>
     </div>
-</div>
+ </div>
         `;
     };
 
@@ -72,43 +81,29 @@ const generateTeam = team => {
             <li class="list-group-item">School: ${intern.getSchool()}</li>
         </ul>
     </div>
-</div>
+ </div>
         `;
     };
 
-    // const html = [];
+    const html = [];
 
-    // html.push(team
-    //     .filter(employee => employee.role === "Manager")
-    //     .map(manager => generateManager(manager))
-    // );
-    // html.push(team
-    //     .filter(employee => employee.getRole() === "Engineer")
-    //     .map(engineer => generateEngineer(engineer))
-    //     .join("")
-    // );
-    // html.push(team
-    //     .filter(employee => employee.getRole() === "Intern")
-    //     .map(intern => generateIntern(intern))
-    //     .join("")
-    // );
+    html.push(team
+        .filter(employee => employee.getRole() === "Manager")
+        .map(manager => generateManager(manager))
+        .join("")
+    );
+    html.push(team
+        .filter(employee => employee.getRole() === "Engineer")
+        .map(engineer => generateEngineer(engineer))
+        .join("")
+    )
+    html.push(team
+        .filter(employee => employee.getRole() === "Intern")
+        .map(intern => generateIntern(intern))
+        .join("")
+    );
 
-    // html.push(team
-    //     .filter(employee => employee.role === "Manager")
-    //     .map(manager => generateManager(manager))
-    // );
-    // html.push(team
-    //     .filter(employee => employee.getRole() === "Engineer")
-    //     .map(engineer => generateEngineer(engineer))
-    //     .join("")
-    // );
-    // html.push(team
-    //     .filter(employee => employee.getRole() === "Intern")
-    //     .map(intern => generateIntern(intern))
-    //     .join("")
-    // );
-
-    // return html.join("");
+    return html.join("");
 
 }
 
