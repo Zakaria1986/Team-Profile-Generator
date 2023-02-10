@@ -35,7 +35,7 @@ To run this app, make sure you have node installed on your machine then go to yo
 
       
 
-To run the app enter node index.html into node console, then you will be prompted with four option i.e. Manager, Engineer, Intern and Exist building the team. Depending on your require at that with will promp you with series of question which you must enter some value to proceed to next question or finish. 
+To run the app enter node index.html into node console, then you will be prompted with four option i.e. Manager, Engineer, Intern and Exist building the team. Depending on your requirement, you will be propmpted with series of question which you must enter some value to proceed to next question or finish. 
 
       
 
