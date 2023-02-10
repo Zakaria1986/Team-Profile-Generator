@@ -40,7 +40,7 @@ To run the app enter node index.html into node console, then you will be prompte
 
       
 
-[Walk through link:](https://youtu.be/-WqAWRtnMFY) 
+[Walk through link:](https://www.youtube.com/watch?v=R_KmtZ3Xvx4) 
 
    ##  License <a name="license-4"></a>
 
