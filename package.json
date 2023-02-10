@@ -1,13 +1,14 @@
 {
   "name": "team-profile-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "Collecting employee information via commond like pront in node.js and then generating an html index file which renders each employee informations",
   "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
   "directories": {
     "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "homepage": "https://github.com/Zakaria1986/Team-Profile-Generator#readme",
   "dependencies": {
     "inquirer": "^8.2.5"
+  },
+  "devDependencies": {
+    "jest": "^29.4.2"
   }
 }

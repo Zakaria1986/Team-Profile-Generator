@@ -37,7 +37,12 @@ function inquirerfunc(promptQuestions) {
 const builtTeam = [];
 
 function createIndexJsFile(createFile) {
-    fs.writeFileSync(outputPath, generateTeam(createFile));
+    fs.writeFileSync(outputPath, generateTeam(createFile), err => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log("Success! Your team building skills are amazing.")
+    });
 }
 
 // User choice function to be used in a loop till user decides not to use it any longer
@@ -63,8 +68,7 @@ function repeatPrompt(selectedChoice) {
                     mData.manName,
                     mData.manId,
                     mData.manEmail,
-                    mData.manOfficeNum,
-                    selectedChoice
+                    mData.manOfficeNum
                 )
 
                 builtTeam.push(managerOb);
@@ -79,8 +83,7 @@ function repeatPrompt(selectedChoice) {
                     enData.enName,
                     enData.enId,
                     enData.enEmail,
-                    enData.enGithub,
-                    selectedChoice
+                    enData.enGithub
                 );
                 builtTeam.push(engineer);
                 userchoiceFunc();
@@ -95,7 +98,6 @@ function repeatPrompt(selectedChoice) {
                     intData.intId,
                     intData.intEmail,
                     intData.intSchool,
-                    selectedChoice
                 );
 
                 builtTeam.push((intern));
