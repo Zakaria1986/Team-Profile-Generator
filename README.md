@@ -1,3 +1,4 @@
+<<<<<<< HEAD
   
   #    Auto generate README.md file from console.   <a name="title-0"></a>
   ##  Description <a name="description-1"></a>
@@ -72,3 +73,7 @@ If you have any further question, please get in touch on: [email](zakaria.khan@z
 
 [Click to see git repository](https://github.com/Zakaria1986)
    
+=======
+# Team-Profile-Generator
+An app that keeps tract of and stores information on employee, intern and manger. 
+>>>>>>> 7d0ba71f3ab0f23311d90fc4425121618f0581dc
